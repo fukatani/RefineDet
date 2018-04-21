@@ -34,7 +34,9 @@ RUN git clone -b ${CLONE_TAG} --depth 1 https://github.com/fukatani/RefineDet.gi
     for req in $(cat python/requirements.txt) pydot; do pip install $req; done && \
     mkdir build && cd build && \
     cmake -DCPU_ONLY=1 .. && \
-    make -j"$(nproc)"
+    make all -j"$(nproc)" && \
+    make py && \
+    make pycaffe
 
 ENV PYCAFFE_ROOT $CAFFE_ROOT/python
 ENV PYTHONPATH $PYCAFFE_ROOT:$PYTHONPATH

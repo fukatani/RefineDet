@@ -61,13 +61,14 @@ def ShowResults(img, image_file, results, labelmap, threshold=0.6, save_fig=Fals
         ax.text(xmin, ymin, display_text, bbox={'facecolor':color, 'alpha':0.5})
     if save_fig:
         plt.savefig(image_file[:-4] + '_dets.jpg', bbox_inches="tight")
+        print('Saved: ' + image_file[:-4] + '_dets.jpg')
     plt.show()
 
 if __name__ == '__main__':
     # gpu preparation
-    gpu_id = 0
-    caffe.set_device(gpu_id)
-    caffe.set_mode_gpu()
+    # gpu_id = 0
+    # caffe.set_device(gpu_id)
+    # caffe.set_mode_gpu()
 
     # load labelmap
     labelmap_file = 'data/VOC0712/labelmap_voc.prototxt'
@@ -110,4 +111,4 @@ if __name__ == '__main__':
         result = np.column_stack([det_xmin, det_ymin, det_xmax, det_ymax, det_conf, det_label])
 
         # show result
-        ShowResults(image, image_file, result, labelmap, 0.6, save_fig=False)
+        ShowResults(image, image_file, result, labelmap, 0.6, save_fig=True)

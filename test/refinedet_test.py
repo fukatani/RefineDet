@@ -6,7 +6,10 @@ import caffe
 import os
 
 if __name__ == '__main__':
-    GPU_ID = 0
+    # GPU_ID = 0
+    # caffe.set_mode_gpu()
+    # caffe.set_device(GPU_ID)
+
     single_scale = True # True: sinle scale test;  False: multi scale test
     test_set = 'voc_2007_test' # 'voc_2007_test' or 'voc_2012_test' or 'coco_2014_minival' or 'coco_2015_test-dev'
     voc_path = 'models/VGGNet/VOC0712/refinedet_vgg16_320x320/'
@@ -22,9 +25,6 @@ if __name__ == '__main__':
     	input_size = 320
     else:
     	input_size = 512
-
-    caffe.set_mode_gpu()
-    caffe.set_device(GPU_ID)
 
     imdb = get_imdb(test_set)
     imdb.competition_mode(False)

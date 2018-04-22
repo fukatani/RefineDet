@@ -29,7 +29,7 @@ ENV CAFFE_ROOT=/opt/caffe
 WORKDIR $CAFFE_ROOT
 
 # FIXME: clone a specific git tag and use ARG instead of ENV once DockerHub supports this.
-ENV CLONE_TAG=master
+ENV CLONE_TAG=docker-gpu
 
 RUN git clone -b ${CLONE_TAG} --depth 1 https://github.com/fukatani/RefineDet.git . && \
     git checkout docker-gpu && \

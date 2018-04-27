@@ -21,9 +21,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         python-numpy \
         python-pip \
         python-scipy && \
-    rm -rf /var/lib/apt/lists/* && \
-    pip install -U pip && \
-    pip install easydict
+    rm -rf /var/lib/apt/lists/*
+# && \
+    #pip install -U pip && \
+#    pip install easydict
 
 ENV CAFFE_ROOT=/opt/caffe
 WORKDIR $CAFFE_ROOT
@@ -33,14 +34,6 @@ ENV CLONE_TAG=docker-gpu
 
 RUN git clone -b ${CLONE_TAG} --depth 1 https://github.com/fukatani/RefineDet.git . && \
     git checkout docker-gpu && \
-    for req in $(cat python/requirements.txt) pydot; do pip install $req; done && \
-    mkdir build && cd build && \
-    cmake -DUSE_CUDNN=1 .. && \
-    make all -j"$(nproc)"
-
-ENV PYCAFFE_ROOT $CAFFE_ROOT/python
-ENV PYTHONPATH $PYCAFFE_ROOT:$PYTHONPATH
-ENV PATH $CAFFE_ROOT/build/tools:$PYCAFFE_ROOT:$PATH
-RUN echo "$CAFFE_ROOT/build/lib" >> /etc/ld.so.conf.d/caffe.conf && ldconfig
+    for req in $(cat python/requirements.txt) pydot easydict; do pip install $req; done
 
 WORKDIR /workspace

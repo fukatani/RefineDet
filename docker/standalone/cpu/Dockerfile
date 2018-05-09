@@ -36,8 +36,10 @@ RUN git clone -b ${CLONE_TAG} --depth 1 https://github.com/sfzhang15/RefineDet.g
     make all -j"$(nproc)"
 
 RUN pip install --upgrade pip && \
-    for req in $(cat python/requirements.txt) pydot easydict; do pip install $req; done && \
-    make py -j"$(nproc)"
+    for req in $(cat python/requirements.txt) pydot easydict opencv-python; do pip install $req; done && \
+    make py -j"$(nproc)" && \
+    cd /opt/caffe/test/lib && \
+    make -j
 
 ENV PYCAFFE_ROOT $CAFFE_ROOT/python
 ENV PYTHONPATH $PYCAFFE_ROOT:$PYTHONPATH
